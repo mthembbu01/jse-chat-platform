@@ -1,1 +1,2 @@
 # jse-chat-platform
+# README
