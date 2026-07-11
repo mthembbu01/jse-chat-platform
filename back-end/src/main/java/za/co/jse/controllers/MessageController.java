@@ -31,7 +31,7 @@ public class MessageController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public void handleAddMessage(@RequestBody MessageDto messageDto) {
         //--
-        service.addMessage(messageDto);
+        service.send(messageDto);
     }
 
 }

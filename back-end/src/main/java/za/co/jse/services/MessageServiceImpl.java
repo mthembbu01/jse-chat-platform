@@ -1,24 +1,29 @@
 package za.co.jse.services;
 
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import za.co.jse.entities.ChatRoom;
 import za.co.jse.entities.Message;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import za.co.jse.exceptions.InvalidMessageException;
+import za.co.jse.exceptions.UserNotFoundException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class MessageServiceImpl implements IMessageService {
 
+    @Getter
     private final ChatRoom defaultChatRoom;
+
     /**
      *
      * @param username
@@ -29,10 +34,10 @@ public class MessageServiceImpl implements IMessageService {
         final List<Message> messages = defaultChatRoom
                 .getChat()
                 .computeIfAbsent(username, k -> new ArrayList<>());
-        return new MessageRespDto(username,messages);
+        return new MessageRespDto(username, messages);
     }
 
-    public void addMessage(MessageDto messageDto) {
+    public void send(MessageDto messageDto) {
         //-- Validate the message
         validateMessage(messageDto);
         //--
@@ -47,9 +52,12 @@ public class MessageServiceImpl implements IMessageService {
                 .add(message);
     }
 
-    private static void validateMessage(MessageDto messageDto) {
+    private void validateMessage(MessageDto messageDto) {
         if (messageDto.getUsername() == null || messageDto.getText() == null) {
-            throw new RuntimeException("Username and message cannot be null");
+            throw new InvalidMessageException("Username and message cannot be null");
+        }
+        if (!UserUtil.existsByUsername(messageDto.getUsername(), defaultChatRoom)) {
+            throw new UserNotFoundException(messageDto.getUsername());
         }
     }
 
