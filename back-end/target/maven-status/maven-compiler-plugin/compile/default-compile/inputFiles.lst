@@ -1,0 +1,11 @@
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/CustomerApp.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/controllers/MessageController.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/Message.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/dtos/MessageDto.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/dtos/MessageRespDto.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/exceptions/ApiErrorResponse.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/exceptions/CustomerEmailUnavailableException.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/exceptions/CustomerNotFoundException.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/exceptions/GlobalExceptionHandler.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/services/IMessageService.java
+/Users/mac/Repositories/labs/JSE/jse-chat-platform/back-end/src/main/java/za/co/jse/services/MessageServiceImpl.java
