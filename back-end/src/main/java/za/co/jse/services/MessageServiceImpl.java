@@ -1,6 +1,8 @@
 package za.co.jse.services;
 
 
+import lombok.RequiredArgsConstructor;
+import za.co.jse.entities.ChatRoom;
 import za.co.jse.entities.Message;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
@@ -12,12 +14,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class MessageServiceImpl implements IMessageService {
 
-    private Map<String, List<Message>> chats = new HashMap<>();
-
-
+    private final ChatRoom defaultChatRoom;
     /**
      *
      * @param username
@@ -25,13 +26,25 @@ public class MessageServiceImpl implements IMessageService {
      */
     @Override
     public MessageRespDto findByUsername(String username) {
-        final List<Message> messages = chats.computeIfAbsent(username, k -> new ArrayList<>());
+        final List<Message> messages = defaultChatRoom
+                .getChat()
+                .computeIfAbsent(username, k -> new ArrayList<>());
         return new MessageRespDto(username,messages);
     }
 
     public void addMessage(MessageDto messageDto) {
+        //-- Validate the message
         validateMessage(messageDto);
-        findByUsername(messageDto.getUsername()).getMessages().add(Message.builder().text(messageDto.getText()).timestamp(LocalDateTime.now()).build());
+        //--
+        final Message message = Message.builder()
+                .username(messageDto.getUsername())
+                .text(messageDto.getText())
+                .timestamp(LocalDateTime.now())
+                .build();
+        //--
+        findByUsername(messageDto.getUsername())
+                .getMessages()
+                .add(message);
     }
 
     private static void validateMessage(MessageDto messageDto) {
