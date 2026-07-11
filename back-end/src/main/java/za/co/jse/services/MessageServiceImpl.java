@@ -32,7 +32,7 @@ public class MessageServiceImpl implements IMessageService {
         return new MessageRespDto(username,messages);
     }
 
-    public void addMessage(MessageDto messageDto) {
+    public Message addMessage(MessageDto messageDto) {
         //-- Validate the message
         validateMessage(messageDto);
         //--
@@ -42,9 +42,11 @@ public class MessageServiceImpl implements IMessageService {
                 .timestamp(LocalDateTime.now())
                 .build();
         //--
-        findByUsername(messageDto.getUsername())
+         findByUsername(messageDto.getUsername())
                 .getMessages()
                 .add(message);
+         //--
+        return message;
     }
 
     private static void validateMessage(MessageDto messageDto) {

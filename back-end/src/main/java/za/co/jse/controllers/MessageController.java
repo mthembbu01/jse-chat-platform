@@ -2,6 +2,7 @@ package za.co.jse.controllers;
 
 
 import org.springframework.http.HttpStatus;
+import za.co.jse.entities.Message;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.services.IMessageService;
@@ -29,9 +30,9 @@ public class MessageController {
     //-- http://localhost:8080/api/v1/chat/add
     @PostMapping(path = "add")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void handleAddMessage(@RequestBody MessageDto messageDto) {
+    public Message handleAddMessage(@RequestBody MessageDto messageDto) {
         //--
-        service.addMessage(messageDto);
+        return service.addMessage(messageDto);
     }
 
 }
