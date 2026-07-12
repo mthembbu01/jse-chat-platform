@@ -1,4 +1,6 @@
-/back-end/target/
+/back-end/target
+/back-end/target/maven-status/*
+/back-end/target/default-compile/*
 .idea No newline at end of file
 
 # Compiled class file
