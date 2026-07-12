@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {User} from '../model/user.model';
-import {AuthService} from '../service/auth.service';
+import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class Login {
 
   router = inject(Router);
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: UserService) {
   }
 
   onSubmit() {

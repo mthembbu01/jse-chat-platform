@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { UserService } from '../service/user.service';
 import { User } from '../model/user.model';
 
 interface ChatMessage {
@@ -29,7 +29,7 @@ export class ChatroomDashboard implements OnInit {
   ];
 
   constructor(
-    private authService: AuthService,
+    private authService: UserService,
     private router: Router
   ) {}
 

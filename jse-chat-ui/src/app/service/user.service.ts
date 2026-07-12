@@ -1,16 +1,18 @@
-// src/app/services/auth.service.ts
+// src/app/services/user.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../model/user.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class UserService {
   // Base endpoint path pointing to your Spring Boot microservice port
-  private privateApiUrl = 'http://localhost:8090/api/v1/user';
+  private privateApiUrl = environment.apiBaseUrl ;
   private currentUser: User | null = null;
+  private errorMsg: string | null = '';
 
   constructor(private http: HttpClient) {}
 
@@ -27,5 +29,9 @@ export class AuthService {
 
   getCurrentUser(): User | null {
     return this.currentUser;
+  }
+
+  getErrorMsg(): string | null {
+    return this.errorMsg;
   }
 }
