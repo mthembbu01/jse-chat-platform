@@ -2,6 +2,7 @@ package za.co.jse.controllers;
 
 
 import org.springframework.http.HttpStatus;
+import za.co.jse.entities.ChatMessage;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.services.IMessageService;
@@ -18,20 +19,19 @@ public class MessageController {
     public MessageController(IMessageService service) {
         this.service = service;
     }
-    //-- http://localhost:8090/api/v1/chat
 
     //-- http://localhost:8080/api/v1/chat?username=<username>
     @GetMapping
-    public MessageRespDto handleFindByUsername(@RequestParam String username) {
+    public MessageRespDto handleFindByUsername(@RequestParam("username") String username) {
         return service.findByUsername(username);
     }
 
-    //-- http://localhost:8080/api/v1/chat/add
-    @PostMapping(path = "add")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public void handleAddMessage(@RequestBody MessageDto messageDto) {
+    //-- http://localhost:8080/api/v1/chat/send
+    @PostMapping(path = "send")
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public ChatMessage handleSend(@RequestBody MessageDto messageDto) throws InterruptedException {
         //--
-        service.send(messageDto);
+        return service.send(messageDto);
     }
 
 }

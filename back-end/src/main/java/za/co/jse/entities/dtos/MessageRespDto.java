@@ -2,7 +2,7 @@ package za.co.jse.entities.dtos;
 
 
 import lombok.*;
-import za.co.jse.entities.Message;
+import za.co.jse.entities.ChatMessage;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ import java.util.List;
 @EqualsAndHashCode
 public class MessageRespDto {
     private String username;
-    private List<Message> messages;
+    private List<ChatMessage> chatMessages;
 }

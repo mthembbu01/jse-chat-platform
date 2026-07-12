@@ -1,13 +1,11 @@
 package za.co.jse.services;
 
-import za.co.jse.entities.ChatRoom;
+import za.co.jse.entities.ChatMessage;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 
 public interface IMessageService {
     MessageRespDto findByUsername(String username);
 
-    void send(MessageDto messageDto);
-
-    ChatRoom getDefaultChatRoom();
+    ChatMessage send(MessageDto messageDto) throws InterruptedException;
 }

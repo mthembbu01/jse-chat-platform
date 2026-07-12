@@ -5,12 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import za.co.jse.entities.ChatRoom;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.exceptions.InvalidMessageException;
 import za.co.jse.exceptions.UserNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -20,6 +25,7 @@ class MessageServiceImplTest {
     private static final String TEST_TEXT = "Hi all";
 
     private final IMessageService messageService;
+    private final ChatRoom defaultChatRoom;
     private final MessageDto testMessage = MessageDto.builder()
             .username(TEST_USERNAME)
             .text(TEST_TEXT)
@@ -27,7 +33,7 @@ class MessageServiceImplTest {
 
     @BeforeEach
     public void prepareDatastore() {
-        messageService.getDefaultChatRoom().getChat().clear();
+        defaultChatRoom.getChat().clear();
     }
 
     @Test
@@ -35,7 +41,7 @@ class MessageServiceImplTest {
         final MessageRespDto testUser = messageService.findByUsername(TEST_USERNAME);
 
         assertNotNull(testUser);
-        assertTrue(testUser.getMessages().isEmpty());
+        assertTrue(testUser.getChatMessages().isEmpty());
     }
 
     @Test
