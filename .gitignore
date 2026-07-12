@@ -33,3 +33,4 @@ replay_pid*
 /jse-chat-ui/build/*
 /jse-chat-ui/.vscode
 /jse-chat-ui/.angular
+/package-lock.json
