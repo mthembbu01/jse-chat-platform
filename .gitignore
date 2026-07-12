@@ -24,3 +24,7 @@ hs_err_pid*
 replay_pid*
 /.idea/
 /jse-chat-ui/node_modules/*
+/jse-chat-ui/dist/*
+/jse-chat-ui/build/*
+/jse-chat-ui/.vscode
+/jse-chat-ui/.angular
