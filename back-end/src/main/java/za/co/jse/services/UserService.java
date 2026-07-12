@@ -1,14 +1,18 @@
 package za.co.jse.services;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import za.co.jse.entities.ChatRoom;
 import za.co.jse.entities.ChatUser;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    public ChatUser login(String username, ChatRoom chatRoom) {
+    private final ChatRoom chatRoom;
+
+    public ChatUser login(String username) {
         return findByUsernameOrCreateNew(username, chatRoom);
     }
 
@@ -35,6 +39,5 @@ public class UserService {
                 .stream()
                 .anyMatch(existingUser -> existingUser.getUsername().equals(username));
     }
-
 
 }

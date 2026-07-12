@@ -1,4 +1,4 @@
-/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/CustomerApp.java
+/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/ChatApp.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/configuration/DefaultChatConfig.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/configuration/WebSocketConfig.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/controllers/MessageController.java

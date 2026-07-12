@@ -1,10 +1,10 @@
-za/co/jse/CustomerApp.class
 za/co/jse/entities/dtos/MessageDto.class
 za/co/jse/exceptions/CustomerEmailUnavailableException.class
 za/co/jse/exceptions/InvalidMessageException.class
 za/co/jse/services/UserService.class
 za/co/jse/entities/ChatRoom.class
 za/co/jse/services/IMessageService.class
+za/co/jse/ChatApp.class
 za/co/jse/services/MessageServiceImpl.class
 za/co/jse/controllers/MessageController.class
 za/co/jse/entities/dtos/MessageDto$MessageDtoBuilder.class

@@ -1,1 +1,62 @@
-<p>login works!</p>
+<!-- External Bootstrap CDN for direct use -->
+<link rel="stylesheet" href="https://jsdelivr.net">
+
+<div class="container-fluid bg-light min-vh-100 d-flex justify-content-center align-items-center p-3">
+
+  <!-- Login Centralized Card -->
+  <div class="card shadow border-0 w-100 py-3" style="max-width: 420px; border-radius: 1rem;">
+    <div class="card-body p-4 p-sm-5 text-center">
+
+      <!-- Avatar Icon Branding placeholder -->
+      <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 70px; height: 70px;">
+        <svg xmlns="http://w3.org" width="32" height="32" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+        </svg>
+      </div>
+
+      <h1 class="h3 fw-bold text-dark mb-2">Welcome Back</h1>
+      <p class="text-muted mb-4 small">Enter a unique username below to access your chat room workspace instantly.</p>
+
+      <!-- Username Input Form Wrapper -->
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="form-floating mb-4">
+          <input
+            type="text"
+            id="usernameInput"
+            name="username"
+            class="form-control border-2 shadow-none"
+            [(ngModel)]="user.username"
+            placeholder="Username"
+            required
+            minlength="3"
+            maxlength="15"
+            pattern="^[a-zA-Z0-9_]*$"
+            #usernameField="ngModel"
+            [ngClass]="{
+              'is-invalid': usernameField.invalid && (usernameField.dirty || usernameField.touched),
+              'is-valid': usernameField.valid && usernameField.dirty
+            }"
+          />
+          <label for="usernameInput" class="text-muted">Choose your username</label>
+
+          <!-- Validation Hints -->
+          <div class="invalid-feedback text-start ps-1">
+            <span *ngIf="usernameField.errors?.['required']">Username is required to enter.</span>
+            <span *ngIf="usernameField.errors?.['minlength']">Must contain at least 3 characters.</span>
+            <span *ngIf="usernameField.errors?.['pattern']">Only letters, numbers, and underscores allowed.</span>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg w-100 fw-bold shadow-sm py-2"
+          [disabled]="loginForm.invalid"
+        >
+          Enter Chat Workspace
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+</div>

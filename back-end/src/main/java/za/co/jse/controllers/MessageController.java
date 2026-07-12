@@ -1,6 +1,7 @@
 package za.co.jse.controllers;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import za.co.jse.entities.ChatMessage;
 import za.co.jse.entities.dtos.MessageDto;
@@ -12,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping(path = "/api/v1/chat")
-public class MessageController {
+@RequiredArgsConstructor
+public class MessageController extends BaseController{
 
     private final IMessageService service;
-
-    public MessageController(IMessageService service) {
-        this.service = service;
-    }
 
     //-- http://localhost:8080/api/v1/chat?username=<username>
     @GetMapping
