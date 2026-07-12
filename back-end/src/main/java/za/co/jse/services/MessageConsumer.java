@@ -28,7 +28,7 @@ public class MessageConsumer {
                     ChatMessage chatMessage = queue.consume();
                     //-- Send the message to the client
                     messagingTemplate.convertAndSend(
-                            "/default/chat",
+                            "/default-chat-room",
                             chatMessage);
 
                 } catch (InterruptedException ex) {

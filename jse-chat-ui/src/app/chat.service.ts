@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@stomp/stompjs';
-// @ts-ignore
-import SockJS from 'sockjs-client';
 
 @Injectable({
   providedIn: 'root'
@@ -10,28 +8,23 @@ export class ChatService {
 
   private client!: Client;
 
-  connect(callback: (msg:any)=>void) {
-
+  connect(callback: (msg: any) => void) {
     this.client = new Client({
-
-      webSocketFactory: () =>
-        new SockJS('http://localhost:8090/jse-chat')
-
+      brokerURL: 'ws://localhost:8090/jse-chat',
+      reconnectDelay: 5000,
+      debug: console.log
     });
 
     this.client.onConnect = () => {
 
-      this.client.subscribe(
-        '/default-chat-room',
+      console.log('Connected');
 
-        message => callback(
-          JSON.parse(message.body))
-      );
+      this.client.subscribe('/topic/default-chat-room', message => {
+        callback(JSON.parse(message.body));
+      });
 
     };
 
     this.client.activate();
-
   }
-
 }
