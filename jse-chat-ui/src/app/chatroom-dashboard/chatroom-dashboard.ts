@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ChatService} from '../chat.service';
 
 @Component({
   selector: 'app-chatroom-dashboard',
@@ -8,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class ChatroomDashboard {
 
+  messages:any[]=[];
+  constructor(private chat:ChatService){}
+
+  ngOnInit(){
+
+    this.chat.connect(message=>{
+
+      this.messages.push(message);
+
+    });
+
+  }
 }
