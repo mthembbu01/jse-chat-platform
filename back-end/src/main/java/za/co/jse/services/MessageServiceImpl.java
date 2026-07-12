@@ -2,14 +2,14 @@ package za.co.jse.services;
 
 
 import lombok.RequiredArgsConstructor;
+import za.co.jse.entities.ChatMessage;
 import za.co.jse.entities.ChatRoom;
-import za.co.jse.entities.Message;
 import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import za.co.jse.queue.ChatQueue;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -19,6 +19,7 @@ import java.util.*;
 public class MessageServiceImpl implements IMessageService {
 
     private final ChatRoom defaultChatRoom;
+    private final ChatQueue chatQueue;
     /**
      *
      * @param username
@@ -26,27 +27,29 @@ public class MessageServiceImpl implements IMessageService {
      */
     @Override
     public MessageRespDto findByUsername(String username) {
-        final List<Message> messages = defaultChatRoom
+        final List<ChatMessage> chatMessages = defaultChatRoom
                 .getChat()
                 .computeIfAbsent(username, k -> new ArrayList<>());
-        return new MessageRespDto(username,messages);
+        return new MessageRespDto(username, chatMessages);
     }
 
-    public Message addMessage(MessageDto messageDto) {
-        //-- Validate the message
+    public ChatMessage send(MessageDto messageDto) throws InterruptedException {
+        //-- Validate the chatMessage
         validateMessage(messageDto);
         //--
-        final Message message = Message.builder()
+        final ChatMessage chatMessage = ChatMessage.builder()
                 .username(messageDto.getUsername())
                 .text(messageDto.getText())
                 .timestamp(LocalDateTime.now())
                 .build();
         //--
          findByUsername(messageDto.getUsername())
-                .getMessages()
-                .add(message);
+                .getChatMessages()
+                .add(chatMessage);
          //--
-        return message;
+        chatQueue.publish(chatMessage);
+        //--
+        return chatMessage;
     }
 
     private static void validateMessage(MessageDto messageDto) {
