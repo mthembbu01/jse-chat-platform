@@ -30,6 +30,7 @@ class MessageServiceImplTest {
             .username(TEST_USERNAME)
             .text(TEST_TEXT)
             .build();
+    private final UserService userService;
 
     @BeforeEach
     public void prepareDatastore() {
@@ -52,6 +53,7 @@ class MessageServiceImplTest {
     @Test
     void should_send_message_if_user_already_exists() {
 //        find user by username or create one if user does not exist
+        userService.login(TEST_USERNAME, defaultChatRoom);
         messageService.findByUsername(TEST_USERNAME);
 
         assertDoesNotThrow(() -> messageService.send(testMessage));

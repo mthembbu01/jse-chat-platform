@@ -14,8 +14,9 @@ import za.co.jse.exceptions.UserNotFoundException;
 import za.co.jse.queue.ChatQueue;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class MessageServiceImpl implements IMessageService {
     @Getter
     private final ChatRoom defaultChatRoom;
     private final ChatQueue chatQueue;
+    private final UserService userService;
 
     /**
      *
@@ -34,8 +36,9 @@ public class MessageServiceImpl implements IMessageService {
     @Override
     public MessageRespDto findByUsername(String username) {
         final List<ChatMessage> chatMessages = defaultChatRoom
-                .getChat()
-                .computeIfAbsent(username, k -> new ArrayList<>());
+                .getChat().stream()
+                .filter(chatMessage -> chatMessage.getUsername().equals(username))
+                .collect(toList());
         return new MessageRespDto(username, chatMessages);
     }
 
@@ -48,21 +51,25 @@ public class MessageServiceImpl implements IMessageService {
                 .text(messageDto.getText())
                 .timestamp(LocalDateTime.now())
                 .build();
+        publishToChatRoom(messageDto, chatMessage);
         //--
-         findByUsername(messageDto.getUsername())
-                .getChatMessages()
-                .add(chatMessage);
-         //--
         chatQueue.publish(chatMessage);
         //--
         return chatMessage;
+    }
+
+    private void publishToChatRoom(MessageDto messageDto, ChatMessage chatMessage) {
+        //--
+        findByUsername(messageDto.getUsername())
+                .getChatMessages()
+                .add(chatMessage);
     }
 
     private void validateMessage(MessageDto messageDto) {
         if (messageDto.getUsername() == null || messageDto.getText() == null) {
             throw new InvalidMessageException("Username and message cannot be null");
         }
-        if (!UserUtil.existsByUsername(messageDto.getUsername(), defaultChatRoom)) {
+        if (!userService.existsByUsername(messageDto.getUsername(), defaultChatRoom)) {
             throw new UserNotFoundException(messageDto.getUsername());
         }
     }
