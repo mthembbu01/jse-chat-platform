@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {User} from '../model/user.model';
 import {AuthService} from '../service/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class Login {
   user: User = new User('');
   errorMessage: string | null = null;
   isLoading: boolean = false;
+
+  router = inject(Router);
 
   constructor(private authService: AuthService) {
   }
@@ -31,6 +34,7 @@ export class Login {
         // Save the strongly-typed backend response to app state
         this.authService.setCurrentUser(resolvedUser);
         console.log('Successfully fetched user:', resolvedUser);
+        this.router.navigate(['dashboard']);
 
         // Ready for routing logic next, e.g., this.router.navigate(['/chat']);
       },
