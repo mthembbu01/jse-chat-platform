@@ -36,7 +36,8 @@ public class MessageServiceImpl implements IMessageService {
     @Override
     public MessageRespDto findByUsername(String username) {
         final List<ChatMessage> chatMessages = defaultChatRoom
-                .getChat().stream()
+                .getChat()
+                .stream()
                 .filter(chatMessage -> chatMessage.getUsername().equals(username))
                 .collect(toList());
         return new MessageRespDto(username, chatMessages);
