@@ -1,1 +1,111 @@
-<p>chatroom-dashboard works!</p>
+<!-- External Bootstrap CDN for direct use -->
+<link rel="stylesheet" href="https://jsdelivr.net">
+
+<!-- Background Matching Facebook Dark Layout Suite: #18191a -->
+<div class="container-fluid min-vh-100 d-flex flex-column p-0 text-white" style="background-color: #18191a; font-family: system-ui, -apple-system, sans-serif;">
+
+  <!-- Header Bar Section (#242526) -->
+  <header class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom shadow-sm" style="background-color: #242526; border-color: #3e4042 !important;">
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-primary bg-opacity-10 p-2 rounded-circle text-primary" style="color: #2374e1 !important;">
+        <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+          <path d="M16 8c0 3.866-3.582 7-8 7a8.8 8.8 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.019a.5.5 0 0 1-.556-.58c.27-.95.855-2.546 1.059-3.351C1.099 10.905 0 9.542 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="h5 fw-bold mb-0" style="color: #e4e6eb;">Main Lobby</h1>
+        <small class="text-success d-flex align-items-center gap-1 small">
+          <span class="d-inline-block rounded-circle bg-success" style="width: 8px; height: 8px;"></span> Live Workspace
+        </small>
+      </div>
+    </div>
+
+    <!-- Active User Badge Profile -->
+    <div class="d-flex align-items-center gap-2" *ngIf="activeUser">
+      <span class="badge border py-2 px-3 fw-semibold text-capitalize" style="background-color: #3a3b3c; border-color: #4e4f50 !important; color: #e4e6eb;">
+        &#64;{{ activeUser.username }}
+      </span>
+<!--      <button class="btn btn-sm btn-outline-secondary border-0" (click)="onLogout()" title="Logout">-->
+<!--        <svg xmlns="http://w3.org" width="18" height="18" fill="currentColor" class="bi bi-box-arrow-right text-muted" viewBox="0 0 16 16">-->
+<!--          <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708"/>-->
+<!--          <path fill-rule="evenodd" d="M2 13.5A1.5 1.5 0 0 0 3.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 10.5 1h-7A1.5 1.5 0 0 0 2 2.5zm1.5-.5a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5 Extends.5v11a.5.5 0 0 1-.5.5z"/>-->
+<!--        </svg>-->
+<!--      </button>-->
+    </div>
+  </header>
+
+  <!-- Interactive Scrollable Messages Container Box Area -->
+  <main class="flex-grow-1 overflow-y-auto px-3 px-sm-5 py-4 d-flex flex-column gap-3" style="max-height: calc(100vh - 145px);">
+
+    <div
+      *ngFor="let msg of messages"
+      class="d-flex flex-column w-100"
+      [class.align-items-end]="msg.sender === activeUser?.username"
+      [class.align-items-start]="msg.sender !== activeUser?.username"
+    >
+      <!-- Message Layout Block structure -->
+      <div class="d-flex flex-column max-w-75" style="max-width: 70%;">
+
+        <!-- Sender Name (Only shown for incoming messages) -->
+        <span
+          *ngIf="msg.sender !== activeUser?.username"
+          class="small mb-1 ps-2 fw-semibold text-uppercase tracking-wider"
+          style="color: #b0b3b8; font-size: 0.72rem;"
+        >
+          {{ msg.sender }}
+        </span>
+
+        <!-- Speech Bubbles (Outgoing: #2374e1 | Incoming: #3a3b3c) -->
+        <div
+          class="px-3 py-2 shadow-sm rounded-4 text-break"
+          [style.background-color]="msg.sender === activeUser?.username ? '#2374e1' : '#3a3b3c'"
+          [style.color]="'#e4e6eb'"
+        >
+          <p class="mb-0 lh-base" style="font-size: 0.95rem;">{{ msg.text }}</p>
+        </div>
+
+        <!-- Timestamp text string indicator -->
+        <span class="opacity-50 mt-1 px-2" style="font-size: 0.65rem; color: #b0b3b8;">
+          {{ msg.time }}
+        </span>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Form Message Typing Footer Workspace Input Control Pane (#242526) -->
+  <footer class="p-3 border-top" style="background-color: #242526; border-color: #3e4042 !important;">
+    <div class="container-md max-w-xl">
+      <form (ngSubmit)="sendMessage()" class="input-group">
+
+        <!-- Custom styled text inputs (#3a3b3c) -->
+        <input
+          type="text"
+          name="messageText"
+          class="form-control border-0 text-white shadow-none py-2.5 px-3"
+          [(ngModel)]="newMessageText"
+          placeholder="Type a message..."
+          autocomplete="off"
+          required
+          style="background-color: #3a3b3c; border-radius: 20px 0 0 20px;"
+        />
+
+        <!-- Send Button using Facebook Blue Accent tint -->
+        <button
+          type="submit"
+          class="btn px-4 fw-bold text-white d-flex align-items-center gap-1 shadow-sm"
+          [disabled]="!newMessageText.trim()"
+          style="background-color: #2374e1; border-radius: 0 20px 20px 0; font-size: 0.95rem;"
+        >
+          <span>Send</span>
+          <svg xmlns="http://w3.org" width="14" height="14" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+          </svg>
+        </button>
+
+      </form>
+    </div>
+  </footer>
+
+</div>
