@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class Message {
+public class ChatMessage {
     private String username;
 
     private String text;
