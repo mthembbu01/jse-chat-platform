@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //-- Register the endpoint
         registry.addEndpoint("/jse-chat")
-                .setAllowedOriginPatterns("*");
+                .setAllowedOriginPatterns("http://localhost:4200");
     }
     /**
      * 1. Enable the message broker
