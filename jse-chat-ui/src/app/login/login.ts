@@ -18,7 +18,7 @@ export class Login {
 
   router = inject(Router);
 
-  constructor(private authService: UserService) {
+  constructor(private userService: UserService) {
   }
 
   onSubmit() {
@@ -28,11 +28,11 @@ export class Login {
     this.errorMessage = null;
 
     // Trigger the microservice API call
-    this.authService.login(this.user.username).subscribe({
+    this.userService.login(this.user.username).subscribe({
       next: (resolvedUser: User) => {
         this.isLoading = false;
         // Save the strongly-typed backend response to app state
-        this.authService.setCurrentUser(resolvedUser);
+        this.userService.setCurrentUser(resolvedUser);
         console.log('Successfully fetched user:', resolvedUser);
         this.router.navigate(['dashboard']);
 

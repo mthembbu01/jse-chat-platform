@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment';
 })
 export class UserService {
   // Base endpoint path pointing to your Spring Boot microservice port
-  private privateApiUrl = environment.apiBaseUrl ;
+  private privateApiUrl = `${environment.apiBaseUrl}/api/v1/user` ;
   private currentUser: User | null = null;
   private errorMsg: string | null = '';
 
