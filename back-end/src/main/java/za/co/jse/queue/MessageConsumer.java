@@ -1,15 +1,15 @@
-package za.co.jse.services;
+package za.co.jse.queue;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import za.co.jse.entities.ChatMessage;
-import za.co.jse.queue.ChatQueue;
 
 @Service
 @RequiredArgsConstructor
 public class MessageConsumer {
+
     private final ChatQueue queue;
     /**
      *
@@ -28,7 +28,7 @@ public class MessageConsumer {
                     ChatMessage chatMessage = queue.consume();
                     //-- Send the message to the client
                     messagingTemplate.convertAndSend(
-                            "/default-chat-room",
+                            "/topic/chat/messages",
                             chatMessage);
 
                 } catch (InterruptedException ex) {

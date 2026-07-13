@@ -35,3 +35,7 @@ replay_pid*
 /jse-chat-ui/.angular
 /package-lock.json
 jse-chat-ui/package-lock.json
+back-end/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+back-end/target/classes/application.yml
+back-end/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+back-end/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
