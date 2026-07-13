@@ -5,8 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import za.co.jse.entities.ChatMessage;
 import za.co.jse.entities.ChatRoom;
-import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.exceptions.InvalidMessageException;
 import za.co.jse.exceptions.UserNotFoundException;
@@ -26,10 +26,7 @@ class MessageServiceImplTest {
 
     private final IMessageService messageService;
     private final ChatRoom defaultChatRoom;
-    private final MessageDto testMessage = MessageDto.builder()
-            .username(TEST_USERNAME)
-            .text(TEST_TEXT)
-            .build();
+    private final ChatMessage testMessage = ChatMessage.builder().username(TEST_USERNAME).text(TEST_TEXT).build();
     private final UserService userService;
 
     @BeforeEach
@@ -61,14 +58,14 @@ class MessageServiceImplTest {
 
     @Test
     void should_throw_InvalidMessageException_if_username_is_null() {
-        final InvalidMessageException invalidMessageException = assertThrows(InvalidMessageException.class, () -> messageService.send(MessageDto.builder().build()));
+        final InvalidMessageException invalidMessageException = assertThrows(InvalidMessageException.class, () -> messageService.send(ChatMessage.builder().build()));
 
         assertEquals("Username and message cannot be null", invalidMessageException.getMessage());
     }
 
     @Test
     void should_throw_InvalidMessageException_if_message_text_is_null() {
-        final MessageDto messageDto = MessageDto.builder().username(TEST_USERNAME).build();
+        final ChatMessage messageDto = ChatMessage.builder().username(TEST_USERNAME).build();
         final InvalidMessageException invalidMessageException = assertThrows(InvalidMessageException.class, () -> messageService.send(messageDto));
 
         assertEquals("Username and message cannot be null", invalidMessageException.getMessage());

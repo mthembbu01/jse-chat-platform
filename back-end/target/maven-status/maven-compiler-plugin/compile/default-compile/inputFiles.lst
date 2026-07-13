@@ -1,7 +1,9 @@
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/ChatApp.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/configuration/DefaultChatConfig.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/configuration/WebSocketConfig.java
+/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/controllers/BaseController.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/controllers/MessageController.java
+/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/controllers/UserController.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/ChatMessage.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/ChatRoom.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/entities/ChatUser.java
@@ -17,4 +19,5 @@
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/IMessageService.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/MessageConsumer.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/MessageServiceImpl.java
+/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/QueueMessageBroadcaster.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/UserService.java

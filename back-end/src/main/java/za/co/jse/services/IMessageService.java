@@ -7,5 +7,5 @@ import za.co.jse.entities.dtos.MessageRespDto;
 public interface IMessageService {
     MessageRespDto findByUsername(String username);
 
-    ChatMessage send(MessageDto messageDto) throws InterruptedException;
+    ChatMessage send(ChatMessage chatMessage) throws InterruptedException;
 }

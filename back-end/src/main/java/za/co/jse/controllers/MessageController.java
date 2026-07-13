@@ -4,7 +4,6 @@ package za.co.jse.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import za.co.jse.entities.ChatMessage;
-import za.co.jse.entities.dtos.MessageDto;
 import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.services.IMessageService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +26,9 @@ public class MessageController extends BaseController{
     //-- http://localhost:8080/api/v1/chat/send
     @PostMapping(path = "send")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public ChatMessage handleSend(@RequestBody MessageDto messageDto) throws InterruptedException {
+    public ChatMessage handleSend(@RequestBody ChatMessage chatMessage) throws InterruptedException {
         //--
-        return service.send(messageDto);
+        return service.send(chatMessage);
     }
 
 }

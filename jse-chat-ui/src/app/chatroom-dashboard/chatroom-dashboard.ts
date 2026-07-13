@@ -6,6 +6,8 @@ import { UserService } from '../service/user.service';
 import { User } from '../model/user.model';
 import {ChatMessage} from '../model/message.model';
 import {ChatService} from '../service/chat.service';
+import {WebsocketService} from '../service/websocket.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-chat-dashboard',
@@ -16,6 +18,7 @@ import {ChatService} from '../service/chat.service';
 export class ChatroomDashboard implements OnInit {
   activeUser: User | null = null;
   newMessageText: string = '';
+  private streamSubscription!: Subscription;
 
   // Dummy data mock structure arrays
   messages: ChatMessage[] = [
@@ -27,6 +30,7 @@ export class ChatroomDashboard implements OnInit {
   constructor(
     private chatService: ChatService,
     private authService: UserService,
+    private wsService: WebsocketService,
     private router: Router
   ) {}
 
@@ -39,6 +43,16 @@ export class ChatroomDashboard implements OnInit {
       console.warn('No active login state located. Redirecting back to authentication.');
       this.router.navigate(['/']);
     }
+
+
+    // Read broadcast payloads automatically
+    this.streamSubscription = this.wsService.getMessagesStream().subscribe({
+      next: (message: ChatMessage) => {
+        console.log('Received payload in view layer:', message);
+        this.messages.push(message);
+      },
+      error: (err) => console.error('Subscription read breakdown:', err)
+    });
   }
 
   sendMessage(): void {
@@ -46,10 +60,7 @@ export class ChatroomDashboard implements OnInit {
     if (this.newMessageText.trim() && this.activeUser) {
       const chatMessage = new ChatMessage(this.activeUser.username, this.newMessageText, new Date());
       // Add the message instance directly onto your conversation board stack array
-      this.messages.push(chatMessage);
-
         console.log("Publishing: ", JSON.stringify(chatMessage))
-
       this.chatService.sendToApi(chatMessage).subscribe({
         next: (message: ChatMessage) => {
           this.messages.push(chatMessage);
