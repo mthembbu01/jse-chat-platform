@@ -2,6 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import {Client, Message} from '@stomp/stompjs';
 import {Observable, Subject} from 'rxjs';
 import {ChatMessage} from '../model/message.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class WebsocketService {
   private initializeWebSocketConnection() {
     this.stompClient = new Client({
       // Use raw WebSocket URL instead of HTTP wrapper
-      brokerURL: 'ws://localhost:8090/ws-chat',
+      brokerURL: `ws://${environment.hostUrl}/ws-chat`,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,

@@ -19,5 +19,4 @@
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/IMessageService.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/MessageConsumer.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/MessageServiceImpl.java
-/home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/QueueMessageBroadcaster.java
 /home/mthoko/IdeaProjects/upskilling/jse-chat-platform/back-end/src/main/java/za/co/jse/services/UserService.java

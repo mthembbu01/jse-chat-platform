@@ -18,7 +18,7 @@ export class ChatService {
 
   connect(callback: (msg: any) => void) {
     this.client = new Client({
-      brokerURL: 'ws://localhost:8090/jse-chat',
+      brokerURL: `ws://${environment.hostUrl}/jse-chat`,
       reconnectDelay: 5000,
       debug: console.log
     });
@@ -54,7 +54,10 @@ export class ChatService {
 
   }
   sendToApi(message: ChatMessage): Observable<ChatMessage> {
-    // Replaces {username} in path with the user input dynamically
     return this.http.post<ChatMessage>(`${this.privateApiUrl}/send`, message)
+  }
+
+  getDefaultChat() {
+    return this.http.get<ChatMessage[]>(`${this.privateApiUrl}/default`)
   }
 }

@@ -12,6 +12,7 @@ import za.co.jse.entities.dtos.MessageRespDto;
 import za.co.jse.exceptions.InvalidMessageException;
 import za.co.jse.exceptions.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -41,6 +42,11 @@ public class MessageServiceImpl implements IMessageService {
         return new MessageRespDto(username, chatMessages);
     }
 
+    @Override
+    public List<ChatMessage> getDefaultChat() {
+        return new ArrayList<>(defaultChatRoom.getChat());
+    }
+
     public ChatMessage send(ChatMessage chatMessage) {
         //-- Validate the chatMessage
         validateMessage(chatMessage);
@@ -53,8 +59,8 @@ public class MessageServiceImpl implements IMessageService {
 
     private void publishToChatRoom(ChatMessage chatMessage) {
         //--
-        findByUsername(chatMessage.getUsername())
-                .getChatMessages()
+        defaultChatRoom
+                .getChat()
                 .add(chatMessage);
     }
 

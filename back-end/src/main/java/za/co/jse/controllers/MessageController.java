@@ -9,6 +9,8 @@ import za.co.jse.services.IMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping(path = "/api/v1/chat")
@@ -29,6 +31,12 @@ public class MessageController extends BaseController{
     public ChatMessage handleSend(@RequestBody ChatMessage chatMessage) throws InterruptedException {
         //--
         return service.send(chatMessage);
+    }
+
+    @GetMapping("default")
+    public List<ChatMessage> getDefaultChat() {
+        List<ChatMessage> defaultChat = service.getDefaultChat();
+        return defaultChat;
     }
 
 }
