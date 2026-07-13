@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-chat-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, ],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './chatroom-dashboard.html'
 })
 export class ChatroomDashboard implements OnInit {
@@ -51,6 +51,9 @@ export class ChatroomDashboard implements OnInit {
         this.messages = chat.map(rawMessage => {
           return new ChatMessage(rawMessage.username, rawMessage.text, parseDate(rawMessage.timestamp));
         });
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 100);
         console.log('Successfully updated chat');
       },
       error: (err) => {
@@ -68,6 +71,7 @@ export class ChatroomDashboard implements OnInit {
       next: (message: { username: string, text: string, timestamp: string, }) => {
         this.addMessageToChat(message);
         setTimeout(() => {
+          this.scrollToBottom();
           this.cdr.detectChanges();
         }, 100);
       },
@@ -97,6 +101,23 @@ export class ChatroomDashboard implements OnInit {
         }
       });
     }
+  }
+
+  private scrollToBottom(delay: number = 0): void {
+    // Use the parameter to control the execution queue delay
+    setTimeout(() => {
+      const element = document.getElementById('chatScrollBox');
+
+      if (element) {
+        try {
+          // Set the scrollTop pointer to the absolute bottom of the container bounds
+          element.scrollTop = element.scrollHeight;
+          console.log('🏁 Initial load scroll executed. Current scroll height:', element.scrollHeight);
+        } catch (err) {
+          console.error('Initial load scroll assignment failure:', err);
+        }
+      }
+    }, delay); // 👈 Applies the custom timeout delay configuration
   }
 
   // onLogout(): void {
