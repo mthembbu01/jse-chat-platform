@@ -40,25 +40,25 @@
     <div
       *ngFor="let msg of messages"
       class="d-flex flex-column w-100"
-      [class.align-items-end]="msg.sender === activeUser?.username"
-      [class.align-items-start]="msg.sender !== activeUser?.username"
+      [class.align-items-end]="msg.username === activeUser?.username"
+      [class.align-items-start]="msg.username !== activeUser?.username"
     >
       <!-- Message Layout Block structure -->
       <div class="d-flex flex-column max-w-75" style="max-width: 70%;">
 
         <!-- Sender Name (Only shown for incoming messages) -->
         <span
-          *ngIf="msg.sender !== activeUser?.username"
+          *ngIf="msg.username !== activeUser?.username"
           class="small mb-1 ps-2 fw-semibold text-uppercase tracking-wider"
           style="color: #b0b3b8; font-size: 0.72rem;"
         >
-          {{ msg.sender }}
+          {{ msg.username }}
         </span>
 
         <!-- Speech Bubbles (Outgoing: #2374e1 | Incoming: #3a3b3c) -->
         <div
           class="px-3 py-2 shadow-sm rounded-4 text-break"
-          [style.background-color]="msg.sender === activeUser?.username ? '#2374e1' : '#3a3b3c'"
+          [style.background-color]="msg.username === activeUser?.username ? '#2374e1' : '#3a3b3c'"
           [style.color]="'#e4e6eb'"
         >
           <p class="mb-0 lh-base" style="font-size: 0.95rem;">{{ msg.text }}</p>

@@ -1,11 +1,13 @@
 export class ChatMessage {
-  sender: string;
+  username: string;
   text: string;
+  timestamp: string;
   time: string;
 
-  constructor(sender: string, text: string, time: string) {
-    this.sender = sender;
+  constructor(username: string, text: string, time: Date) {
+    this.username = username;
     this.text = text;
-    this.time = time;
+    this.timestamp = time.toLocaleDateString('en-CA') + ' ' + time.toTimeString().split(' ')[0];;
+    this.time = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 }

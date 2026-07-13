@@ -1,5 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Client, IMessage } from '@stomp/stompjs';
+import {Injectable} from '@angular/core';
+import {Client, IMessage} from '@stomp/stompjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
+import {ChatMessage} from '../model/message.model';
+import {User} from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +12,9 @@ import { Client, IMessage } from '@stomp/stompjs';
 export class ChatService {
 
   private client!: Client;
+  private privateApiUrl = `${environment.apiBaseUrl}/api/v1/chat` ;
+
+  constructor(private http: HttpClient) {}
 
   connect(callback: (msg: any) => void) {
     this.client = new Client({
@@ -44,5 +52,9 @@ export class ChatService {
 
     });
 
+  }
+  sendToApi(message: ChatMessage): Observable<ChatMessage> {
+    // Replaces {username} in path with the user input dynamically
+    return this.http.post<ChatMessage>(`${this.privateApiUrl}/send`, message)
   }
 }

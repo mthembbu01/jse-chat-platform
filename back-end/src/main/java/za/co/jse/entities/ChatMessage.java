@@ -1,5 +1,6 @@
 package za.co.jse.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,5 +17,6 @@ public class ChatMessage {
 
     private String text;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 }
