@@ -19,7 +19,8 @@ export class UserService {
   // Fetch the user model from the microservice GET endpoint
   login(username: string): Observable<User> {
     // Replaces {username} in path with the user input dynamically
-    return this.http.get<User>(`${this.privateApiUrl}/${(username.trim())}`);
+    //TODO: Update the url path
+    return this.http.get<User>(`${this.privateApiUrl}?username=${(username.trim())}`);
   }
 
   // Set local state once successfully verified from backend

@@ -6,11 +6,18 @@ spring:
     virtual:
       enabled: true
 
+logging:
+  level:
+    org.springframework.web.socket: DEBUG
+    org.springframework.messaging: DEBUG
+
 #-- enable the gzip configs
 server:
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,application/json,application/xml,text/css,text/javascript,application/javascript
     min-response-size: 1024
+  servlet:
+    context-path: /chat
   port: 8090
 

@@ -5,18 +5,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import za.co.jse.entities.ChatRoom;
 import za.co.jse.entities.ChatUser;
+import za.co.jse.exceptions.UserAlreadyExistsException;
+import za.co.jse.queue.ChatQueue;
+
+import java.util.PriorityQueue;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final ChatRoom chatRoom;
+    private final ChatQueue chatRoom;
 
-    public ChatUser login(String username) {
-        return findByUsernameOrCreateNew(username, chatRoom);
+    public ChatUser join(String username) {
+        if (existsByUsername(username, chatRoom)) {
+            throw new UserAlreadyExistsException(username);
+        }
+
+        ChatUser user = new ChatUser(
+                username,
+                new PriorityQueue<>(ChatUser.CHAT_MESSAGE_COMPARATOR));
+
+        chatRoom.register(user);
+
+        return user;
     }
 
-    private ChatUser findByUsernameOrCreateNew(String username, ChatRoom chatRoom) {
+    private ChatUser findByUsernameOrCreateNew(String username, ChatQueue chatRoom) {
         return chatRoom
                 .getUsers()
                 .stream()
@@ -25,15 +39,15 @@ public class UserService {
                 .orElse(createNewUser(username, chatRoom));
     }
 
-    private ChatUser createNewUser(String username, ChatRoom chatRoom) {
-        final ChatUser user = new ChatUser(username);
-
-        chatRoom.getUsers().add(user);
+    private ChatUser createNewUser(String username, ChatQueue chatRoom) {
+        final ChatUser user = new ChatUser(username, new PriorityQueue<>(ChatUser.CHAT_MESSAGE_COMPARATOR));
+        // Register the user via ChatQueue API instead of mutating the internal map view
+        chatRoom.register(user);
 
         return user;
     }
 
-    public boolean existsByUsername(String username, ChatRoom chatRoom) {
+    public boolean existsByUsername(String username, ChatQueue chatRoom) {
         return chatRoom
                 .getUsers()
                 .stream()
